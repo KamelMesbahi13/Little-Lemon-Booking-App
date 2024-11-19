@@ -1,0 +1,26 @@
+{
+  "navbarItems": [
+    {
+      "id": 1,
+      "ItemOne": "Home",
+      "ItemOne_ar": "الصفحة الرئيسية",
+      "ItemOne_fr": "Accueil",
+
+      "ItemTwo": "Our Products",
+      "ItemTwo_ar": "منتجاتنا",
+      "ItemTwo_fr": "Nos produits",
+
+      "ItemThree": "About Us",
+      "ItemThree_ar": "عنا",
+      "ItemThree_fr": "À Propos de Nous",
+
+      "ItemFour": "Contact Us",
+      "ItemFour_ar": "اتصل بنا",
+      "ItemFour_fr": "Contactez Nous",
+
+      "ItemFive": "Privacy policy",
+      "ItemFive_ar": "سياسة الخصوصية",
+      "ItemFive_fr": "Politique de confidentialité"
+    }
+  ]
+}
