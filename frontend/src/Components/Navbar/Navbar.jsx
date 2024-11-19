@@ -82,10 +82,18 @@ const Navbar = () => {
                   <Link to="/">
                     <img className="w-auto h-24" src={Logo} alt="Logo" />
                     <div className="flex justify-around">
-                      <FaInstagram />
-                      <FaTiktok />
-                      <FaFacebook />
-                      <FaYoutube />
+                      <a href="">
+                        <FaInstagram />
+                      </a>
+                      <a href="">
+                        <FaTiktok />
+                      </a>
+                      <a href="">
+                        <FaFacebook />
+                      </a>
+                      <a href="">
+                        <FaYoutube />
+                      </a>
                     </div>
                   </Link>
                 </div>
