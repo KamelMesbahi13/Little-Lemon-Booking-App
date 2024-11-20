@@ -5,7 +5,7 @@
 // export const UPLOAD_URL = "/api/upload";
 // export const ORDERS_URL = "/api/orders";
 
-export const BASE_URL = "https://toolsmaster.onrender.com";
+export const BASE_URL = "https://tools-master.onrender.com";
 
 export const USERS_URL = `${BASE_URL}/api/users`;
 export const CATEGORY_URL = `${BASE_URL}/api/category`;
