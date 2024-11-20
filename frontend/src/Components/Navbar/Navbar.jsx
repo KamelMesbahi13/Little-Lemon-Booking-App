@@ -81,21 +81,31 @@ const Navbar = () => {
                 <div className="flex-shrink-0">
                   <Link to="/">
                     <img className="w-auto h-24" src={Logo} alt="Logo" />
-                    <div className="flex justify-around">
-                      <a href="">
-                        <FaInstagram />
-                      </a>
-                      <a href="">
-                        <FaTiktok />
-                      </a>
-                      <a href="">
-                        <FaFacebook />
-                      </a>
-                      <a href="">
-                        <FaYoutube />
-                      </a>
-                    </div>
                   </Link>
+                  <div className="flex justify-around">
+                    <a
+                      href="https://www.instagram.com/toolsmarket.dz/"
+                      target="_blank"
+                    >
+                      <FaInstagram />
+                    </a>
+                    <a
+                      href="https://www.tiktok.com/@toolsmarketdz"
+                      target="_blank"
+                    >
+                      <FaTiktok />
+                    </a>
+                    <a href="https://www.facebook.com/Toolsmarketdz">
+                      <FaFacebook />
+                    </a>
+                    <a
+                      href="https://www.youtube.com/@ToolsMarket-dz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaYoutube />
+                    </a>
+                  </div>
                 </div>
                 <div className="flex justify-center flex-grow gap-8 ml-28">
                   <RouterLink className="link linkColor" to="/">
