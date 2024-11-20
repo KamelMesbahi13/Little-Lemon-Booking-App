@@ -48,7 +48,7 @@ router.post(
 
     if (req.files) {
       const imageOnePath = req.files["image_one"]
-        ? `/uploads/${path.basename(req.files["image_one"][0].path)}`
+        ? `/${req.files["image_one"][0].path}`
         : null;
       const imageTwoPath = req.files["image_two"]
         ? `/${req.files["image_two"][0].path}`
