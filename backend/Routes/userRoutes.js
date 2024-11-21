@@ -10,26 +10,22 @@ import {
   getUserById,
   updateUserById,
 } from "../Controllers/userController.js";
-import { authenticate, authorizeAdmin } from "../Middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router
-  .route("/")
-  .post(createUser)
-  .get(authenticate, authorizeAdmin, getAllUsers);
+router.route("/").post(createUser).get(getAllUsers);
 router.post("/auth", loginUser);
 router.post("/logout", logoutCurrentUser);
 router
   .route("/profile")
-  .get(authenticate, getCurrentUserProfile)
-  .put(authenticate, updateCurrentUserProfile);
+  .get(getCurrentUserProfile)
+  .put(updateCurrentUserProfile);
 
 // Admin Routes
 router
   .route("/:id")
-  .delete(authenticate, authorizeAdmin, deleteUserById)
-  .get(authenticate, authorizeAdmin, getUserById)
-  .put(authenticate, authorizeAdmin, updateUserById);
+  .delete(deleteUserById)
+  .get(getUserById)
+  .put(updateUserById);
 
 export default router;
