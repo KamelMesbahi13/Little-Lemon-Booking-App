@@ -5,13 +5,11 @@ import {
   useDeleteCategoryMutation,
   useFetchCategoriesQuery,
 } from "../../../Redux/Api/categoryApiSlice";
-import { toast } from "react-toastify";
 import CategoryForm from "../../../Components/Ui/CategoryForm/CategoryForm";
 import Modal from "../../../Components/Ui/Modal/Modal";
 import AdminMenu from "../AdminMenu/AdminMenu";
 import { useTranslation } from "react-i18next";
 import Loader from "../../Ui/Loader/Loader";
-import i18next from "i18next";
 
 const CategoryList = () => {
   const { t } = useTranslation();
@@ -33,34 +31,24 @@ const CategoryList = () => {
   const handleCreateCategory = async (e) => {
     e.preventDefault();
     if (!name) {
-      toast.error(`${t("toast_name_required")}`);
+      console.error(t("toast_name_required")); // Log the error
       return;
     }
 
     try {
       const result = await createCategory({ name }).unwrap();
-
-      const currentLang = i18next.language;
-
-      if (currentLang === "en") {
-        toast.success(`${result.name} is created.`);
-      } else if (currentLang === "ar") {
-        toast.success(`${result.name} تم انشائه.`);
-      } else if (currentLang === "fr") {
-        toast.success(`${result.name} est créé.`);
-      }
-
+      console.log(`${t("toast_created", { name: result.name })}`);
       setName("");
       refetch();
     } catch (error) {
-      console.error(error);
+      console.error(t("toast_creation_failed"), error);
     }
   };
 
   const handleUpdateCategory = async (e) => {
     e.preventDefault();
     if (!updatingName || !selectedCategory) {
-      toast.error(`${t("category_name_selected")}`);
+      console.error(t("toast_category_name_selected"));
       return;
     }
 
@@ -69,55 +57,30 @@ const CategoryList = () => {
         categoryId: selectedCategory._id,
         updatedCategory: { name: updatingName },
       }).unwrap();
-
-      // Get the current language
-      const currentLang = i18next.language;
-
-      // Show a toast message based on the language
-      if (currentLang === "en") {
-        toast.success(`${result.name} is updated`);
-      } else if (currentLang === "ar") {
-        toast.success(`${result.name} تم تحديثه`);
-      } else if (currentLang === "fr") {
-        toast.success(`${result.name} est actualisé`);
-      }
-
+      console.log(`${t("toast_updated", { name: result.name })}`);
       setSelectedCategory(null);
       setUpdatingName("");
       setModalVisible(false);
-      refetch(); // Refresh the category list after update
+      refetch();
     } catch (error) {
-      console.error(error);
+      console.error(t("toast_update_failed"), error);
     }
   };
 
   const handleDeleteCategory = async () => {
     if (!selectedCategory) {
-      toast.error(`${t("toast_category_required")}`);
+      console.error(t("toast_category_required"));
       return;
     }
 
     try {
       const result = await deleteCategory(selectedCategory._id).unwrap();
-
-      // Get the current language
-      const currentLang = i18next.language;
-
-      // Show a toast message based on the language
-      if (currentLang === "en") {
-        toast.success(`${result.name} is deleted.`);
-      } else if (currentLang === "ar") {
-        toast.success(`${result.name} تم حذفه.`);
-      } else if (currentLang === "fr") {
-        toast.success(`${result.name} est supprimé.`);
-      }
-
+      console.log(`${t("toast_deleted", { name: result.name })}`);
       setSelectedCategory(null);
       setModalVisible(false);
-      refetch(); // Refresh the category list after deletion
+      refetch();
     } catch (error) {
-      console.error(error);
-      toast.error(`${t("category_deletion")}`);
+      console.error(t("toast_deletion_failed"), error);
     }
   };
 
