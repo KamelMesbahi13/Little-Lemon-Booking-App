@@ -8,13 +8,9 @@ import {
   readCategory,
 } from "../Controllers/categoryController.js";
 
-import { authenticate, authorizeAdmin } from "../Middlewares/authMiddleware.js";
-
-router.route("/").post(authenticate, authorizeAdmin, createCategory);
-router.route("/:categoryId").put(authenticate, authorizeAdmin, updateCategory);
-router
-  .route("/:categoryId")
-  .delete(authenticate, authorizeAdmin, removeCategory);
+router.route("/").post(createCategory);
+router.route("/:categoryId").put(updateCategory);
+router.route("/:categoryId").delete(removeCategory);
 
 router.route("/categories").get(listCategory);
 router.route("/:id").get(readCategory);
