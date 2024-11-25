@@ -22,9 +22,9 @@ const ImageUploadFour = ({ setImage, setImageUrl }) => {
     setIsLoading(true);
     try {
       const res = await uploadProductImage(formData).unwrap();
-      setImage(res.image_four);
-      t;
-      setImageUrl(res.image_four);
+      const uploadedImageUrl = res.files.image_four[0].path;
+      setImage(uploadedImageUrl); // Save the URL to state
+      setImageUrl(uploadedImageUrl); // Update preview
       toast.success(t("toast_img_uploaded"));
     } catch (error) {
       toast.error(error?.data?.message || error.error);
