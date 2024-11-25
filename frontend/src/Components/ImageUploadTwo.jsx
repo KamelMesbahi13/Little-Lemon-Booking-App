@@ -9,6 +9,29 @@ const ImageUploadTwo = ({ setImage, setImageUrl }) => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const [isLoading, setIsLoading] = useState(false);
 
+  // const uploadFileHandler = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) {
+  //     toast.error(t("toast_img_required"));
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   formData.append("image_two", file);
+
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await uploadProductImage(formData).unwrap();
+  //     setImage(res.image_two);
+  //     setImageUrl(res.image_two);
+  //     toast.success(t("toast_img_uploaded"));
+  //   } catch (error) {
+  //     toast.error(error?.data?.message || error.error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     if (!file) {
@@ -22,8 +45,9 @@ const ImageUploadTwo = ({ setImage, setImageUrl }) => {
     setIsLoading(true);
     try {
       const res = await uploadProductImage(formData).unwrap();
-      setImage(res.image_two);
-      setImageUrl(res.image_two);
+      const uploadedImageUrl = res.files.image_two[0].path;
+      setImage(uploadedImageUrl); // Save the URL to state
+      setImageUrl(uploadedImageUrl); // Update preview
       toast.success(t("toast_img_uploaded"));
     } catch (error) {
       toast.error(error?.data?.message || error.error);
