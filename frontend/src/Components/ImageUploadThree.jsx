@@ -9,29 +9,6 @@ const ImageUploadOne = ({ setImage, setImageUrl }) => {
   const [uploadProductImage] = useUploadProductImageMutation();
   const [isLoading, setIsLoading] = useState(false);
 
-  // const uploadFileHandler = async (e) => {
-  //   const file = e.target.files[0];
-  //   if (!file) {
-  //     toast.error(t("toast_img_required"));
-  //     return;
-  //   }
-
-  //   const formData = new FormData();
-  //   formData.append("image_three", file);
-
-  //   setIsLoading(true);
-  //   try {
-  //     const res = await uploadProductImage(formData).unwrap();
-  //     setImage(res.image_three);
-  //     setImageUrl(res.image_three);
-  //     toast.success(t("toast_img_uploaded"));
-  //   } catch (error) {
-  //     toast.error(error?.data?.message || error.error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     if (!file) {
