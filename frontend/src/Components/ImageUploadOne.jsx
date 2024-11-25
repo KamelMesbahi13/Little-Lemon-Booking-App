@@ -22,6 +22,7 @@ const ImageUploadOne = ({ setImage, setImageUrl }) => {
     setIsLoading(true);
     try {
       const res = await uploadProductImage(formData).unwrap();
+      console.log(res);
       setImage(res.image_one);
       setImageUrl(res.image_one);
       toast.success(t("toast_img_uploaded"));
