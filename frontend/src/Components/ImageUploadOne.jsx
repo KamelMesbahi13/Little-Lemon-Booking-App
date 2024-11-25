@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useUploadProductImageMutation } from "../Redux/Api/productApiSlice";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 
 const ImageUploadOne = ({ setImage, setImageUrl }) => {
   const { t } = useTranslation();
