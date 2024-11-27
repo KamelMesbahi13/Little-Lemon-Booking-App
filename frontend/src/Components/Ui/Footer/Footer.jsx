@@ -110,13 +110,16 @@ const Footer = () => {
                   </i>
                 </a>
 
-                <a href="https://www.tiktok.com/@toolsmarketdz">
+                <a href="https://www.tiktok.com/@toolsmarketdz" target="_blank">
                   <i className="text-2xl">
                     <FaTiktok />
                   </i>
                 </a>
 
-                <a href="https://www.youtube.com/@ToolsMarket-dz">
+                <a
+                  href="https://www.youtube.com/@ToolsMarket-dz"
+                  target="_blank"
+                >
                   <i className="text-2xl text-[#FF0000]">
                     <FaYoutube />
                   </i>

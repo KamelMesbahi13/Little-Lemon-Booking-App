@@ -84,6 +84,7 @@ const Navbar = () => {
                   </Link>
                   <div className="flex justify-around">
                     <a
+                      className="text-[#E1306C]"
                       href="https://www.instagram.com/toolsmarket.dz/"
                       target="_blank"
                     >
@@ -95,10 +96,14 @@ const Navbar = () => {
                     >
                       <FaTiktok />
                     </a>
-                    <a href="https://www.facebook.com/Toolsmarketdz">
+                    <a
+                      href="https://www.facebook.com/Toolsmarketdz"
+                      className="text-[#1877F2]"
+                    >
                       <FaFacebook />
                     </a>
                     <a
+                      className="text-[#FF0000]"
                       href="https://www.youtube.com/@ToolsMarket-dz"
                       target="_blank"
                       rel="noopener noreferrer"
