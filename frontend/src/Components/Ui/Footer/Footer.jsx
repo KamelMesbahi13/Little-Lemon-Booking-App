@@ -52,7 +52,7 @@ const Footer = () => {
                 <i className="mr-3 text-xl text-mainColor">
                   <FaPhoneAlt />
                 </i>
-                <p className="italic font-bold">0770 11 88 84</p>
+                <p className="italic font-bold">0797 60 33 66</p>
               </div>
               <div className="flex items-center initialDirection">
                 <i className="mr-3 text-2xl text-mainColor">

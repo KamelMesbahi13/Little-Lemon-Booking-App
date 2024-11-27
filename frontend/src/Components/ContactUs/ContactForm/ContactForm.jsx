@@ -23,9 +23,9 @@ const Boxes = [
     title: "Phone Number",
     title_fr: "Numéro de téléphone",
     title_ar: "رقم الهاتف",
-    paragraph: "0770 11 88 84",
-    paragraph_fr: "0770 11 88 84",
-    paragraph_ar: "0770 11 88 84",
+    paragraph: "0797 60 33 66",
+    paragraph_fr: "0797 60 33 66",
+    paragraph_ar: "0797 60 33 66",
   },
 
   {
@@ -139,7 +139,7 @@ const ContactForm = () => {
                   <div className="pb-8">
                     <iframe
                       className="md:w-[550px] md:h-[500px]"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51144.60334184816!2d3.45048706278268!3d36.757666065294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e68dcc89e5b23%3A0x84e914279405eb13!2sBoumerd%C3%A8s!5e0!3m2!1sfr!2sdz!4v1724941512860!5m2!1sfr!2sdz"
+                      src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3196.0282393659018!2d3.2385880000000005!3d36.769890000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzbCsDQ2JzExLjYiTiAzwrAxNCcxOC45IkU!5e0!3m2!1sen!2sdz!4v1732720961756!5m2!1sen!2sdz"
                       allowFullScreen=""
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
