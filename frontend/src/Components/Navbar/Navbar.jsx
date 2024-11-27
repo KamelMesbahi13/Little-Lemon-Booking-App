@@ -80,7 +80,7 @@ const Navbar = () => {
               <div className="flex items-center w-full">
                 <div className="flex-shrink-0">
                   <Link to="/">
-                    <img className="w-auto h-24" src={Logo} alt="Logo" />
+                    <img className="w-[12rem] h-16" src={Logo} alt="Logo" />
                   </Link>
                   <div className="flex justify-around">
                     <a
@@ -107,7 +107,7 @@ const Navbar = () => {
                     </a>
                   </div>
                 </div>
-                <div className="flex justify-center flex-grow gap-8 ml-28">
+                <div className="flex justify-center flex-grow gap-8 ">
                   <RouterLink className="link linkColor" to="/">
                     {modifiedDataNav.map((el) => el.ItemOne)}
                   </RouterLink>
