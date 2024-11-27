@@ -58,7 +58,7 @@ const app = express();
 // CORS configuration
 app.use(
   cors({
-    origin: ["https://tools-masterrr.pages.dev"], // Add your frontend URL
+    origin: ["https://toolsmarketdz.com"], // Add your frontend URL
     credentials: true,
   })
 );
@@ -74,9 +74,6 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoute); // This will be updated for Cloudinary
 app.use("/api/orders", orderRoutes);
-
-// Remove local `uploads` static route
-// app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Serve frontend if needed
 if (process.env.NODE_ENV === "production") {
