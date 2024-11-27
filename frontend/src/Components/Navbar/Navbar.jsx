@@ -98,6 +98,7 @@ const Navbar = () => {
                     </a>
                     <a
                       href="https://www.facebook.com/Toolsmarketdz"
+                      target="_blank"
                       className="text-[#1877F2]"
                     >
                       <FaFacebook />
