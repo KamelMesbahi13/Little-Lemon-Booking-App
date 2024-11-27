@@ -33,7 +33,7 @@ const NewProducts = () => {
             className="duration-300 hover:text-mainColor"
             to="/Nouveau-produit"
           >
-            <h2>{t("latest_products")}ee</h2>
+            <h2>{t("latest_products")}</h2>
           </Link>
         </div>
         <div className="flex overflow-hidden">
