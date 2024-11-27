@@ -3,7 +3,13 @@ import { Link as RouterLink } from "react-router-dom";
 import Data from "../../../Data/Data.json";
 import Logo from "../../../assets/Logo.jpg";
 import { BiLogoGmail } from "react-icons/bi";
-import { FaInstagram, FaTiktok, FaFacebook, FaPhoneAlt } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaTiktok,
+  FaFacebook,
+  FaPhoneAlt,
+  FaYoutube,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
@@ -90,20 +96,26 @@ const Footer = () => {
                   href="https://www.instagram.com/_n/confirm_email_deeplink?nc=hRyCprUn&ec=dG9vbHMubWFya2V0LmFsZ2VyaWFAZ21haWwuY29t&target_user_id=69064775137&utm_campaign=introduction_full_email&utm_source=instagram&utm_medium=email&ts=622eb07465d5a&ndid=HMTcyNzI0MTQ2MjcwOTc4MTp0b29scy5tYXJrZXQuYWxnZXJpYUBnbWFpbC5jb206ODU5"
                   target="_blank"
                 >
-                  <i className="text-2xl text-mainColor">
+                  <i className="text-2xl text-[#E1306C]">
                     <FaInstagram />
                   </i>
                 </a>
 
                 <a href="/" target="_blank">
-                  <i className="text-2xl text-mainColor">
+                  <i className="text-2xl text-[#1877F2]">
                     <FaFacebook />
                   </i>
                 </a>
 
                 <a href="/">
-                  <i className="text-2xl text-mainColor">
+                  <i className="text-2xl">
                     <FaTiktok />
+                  </i>
+                </a>
+
+                <a href="/">
+                  <i className="text-2xl text-[#FF0000]">
+                    <FaYoutube />
                   </i>
                 </a>
               </div>
