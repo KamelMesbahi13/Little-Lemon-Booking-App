@@ -93,7 +93,7 @@ const Footer = () => {
               </p>
               <div className="flex justify-between w-1/2 text-2xl">
                 <a
-                  href="https://www.instagram.com/_n/confirm_email_deeplink?nc=hRyCprUn&ec=dG9vbHMubWFya2V0LmFsZ2VyaWFAZ21haWwuY29t&target_user_id=69064775137&utm_campaign=introduction_full_email&utm_source=instagram&utm_medium=email&ts=622eb07465d5a&ndid=HMTcyNzI0MTQ2MjcwOTc4MTp0b29scy5tYXJrZXQuYWxnZXJpYUBnbWFpbC5jb206ODU5"
+                  href="https://www.instagram.com/toolsmarket.dz/"
                   target="_blank"
                 >
                   <i className="text-2xl text-[#E1306C]">
@@ -101,19 +101,22 @@ const Footer = () => {
                   </i>
                 </a>
 
-                <a href="/" target="_blank">
+                <a
+                  href="https://www.facebook.com/Toolsmarketdz"
+                  target="_blank"
+                >
                   <i className="text-2xl text-[#1877F2]">
                     <FaFacebook />
                   </i>
                 </a>
 
-                <a href="/">
+                <a href="https://www.tiktok.com/@toolsmarketdz">
                   <i className="text-2xl">
                     <FaTiktok />
                   </i>
                 </a>
 
-                <a href="/">
+                <a href="https://www.youtube.com/@ToolsMarket-dz">
                   <i className="text-2xl text-[#FF0000]">
                     <FaYoutube />
                   </i>
