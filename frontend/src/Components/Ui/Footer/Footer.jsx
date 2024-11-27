@@ -110,7 +110,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="md:mt-24 mt-14 textCenter">
-            <img className="w-40" src={Logo} alt="" />
+            <img className="w-80" src={Logo} alt="" />
           </div>
           <div>
             <div className="w-full h-2 mt-8 bg-mainColor"></div>

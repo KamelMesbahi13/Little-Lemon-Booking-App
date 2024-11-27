@@ -263,10 +263,10 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="bg-white">
+        <div className="mt-4 bg-white">
           <div className="container flex flex-row-reverse items-center justify-between lg:hidden">
             <div className={nav ? "visible lg:invisible" : "invisible"}>
-              <img src={Logo} className="w-24" alt="Logo" />
+              <img src={Logo} className="h-8" alt="Logo" />
             </div>
             <div>
               <div className="lg:hidden">
@@ -326,7 +326,7 @@ const Navbar = () => {
               <div className="container flex flex-row justify-between rtl:flex-row-reverse">
                 <div className="mt-2 lg:hidden">
                   <img
-                    className={nav ? "invisible w-24" : "visible w-24"}
+                    className={nav ? "invisible w-40" : "visible w-40"}
                     src={Logo}
                     alt="Logo"
                   />
