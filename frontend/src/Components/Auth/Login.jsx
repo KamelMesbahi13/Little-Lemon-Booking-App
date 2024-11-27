@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Ui/Loader/Loader";
 import { useLoginMutation } from "../../Redux/Api/usersApiSlice";
@@ -64,9 +64,9 @@ const Login = () => {
     />
   );
 
-  const ToRegisterHandle = () => {
-    window.scrollTo(0, 0);
-  };
+  // const ToRegisterHandle = () => {
+  //   window.scrollTo(0, 0);
+  // };
 
   return (
     <div>
@@ -90,7 +90,7 @@ const Login = () => {
               {isLoading && !validationError && <Loader />}{" "}
             </div>
           </form>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <p>
               {t("dont_have_account")}
               <Link
@@ -101,7 +101,7 @@ const Login = () => {
                 {t("register")}
               </Link>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
