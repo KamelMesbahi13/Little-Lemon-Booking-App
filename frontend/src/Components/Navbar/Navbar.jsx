@@ -269,7 +269,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="mt-4 bg-white">
+        <div className="my-4 bg-white">
           <div className="container flex flex-row-reverse items-center justify-between lg:hidden">
             <div className={nav ? "visible lg:invisible" : "invisible"}>
               <img src={Logo} className="h-8" alt="Logo" />
