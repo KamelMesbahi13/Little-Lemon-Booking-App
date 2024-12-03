@@ -12,9 +12,9 @@ const Boxes = [
     title: "Our Location",
     title_fr: "Notre localisation",
     title_ar: "موقعنا",
-    paragraph: "1111, Boumerdes, Boumerdes",
-    paragraph_fr: "1111, Boumerdes, Boumerdes",
-    paragraph_ar: "1111، بومرداس، بومرداس",
+    paragraph: "164 Hai Ben Zerga Bordj El kiffen",
+    paragraph_fr: "164 Hai Ben Zerga Bordj El kiffen",
+    paragraph_ar: "164 حي بن زرقة ببرج الكيفان",
   },
 
   {
