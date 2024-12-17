@@ -17,12 +17,11 @@ const productSchema = mongoose.Schema(
     image_three: { type: String, required: false },
     image_four: { type: String, required: false },
 
-    // images: { type: [String], required: true },
     brand: { type: String, required: true },
     quantity: { type: Number, required: true },
     category: { type: ObjectId, ref: "Category", required: true },
     description: { type: String, required: true },
-    description_ar: { type: String, required: true },
+    description_ar: { type: String },
     reviews: [reviewSchema],
     rating: { type: Number, required: true, default: 0 },
     numReviews: { type: Number, required: true, default: 0 },
