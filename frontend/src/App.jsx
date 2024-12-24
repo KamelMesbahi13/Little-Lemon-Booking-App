@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import PrivacyPolicy from "./Components/PrivacyPolicy/PrivacyPolicy";
@@ -59,6 +59,14 @@ const NewestProducts = lazy(() =>
 
 const App = () => {
   const location = useLocation();
+
+  // Trigger PageView event on route changes
+  useEffect(() => {
+    if (window.fbq) {
+      window.fbq("track", "PageView");
+    }
+  }, [location]);
+
   const pathsWithFooter = [
     "/",
     "/A-Propos-de-Nous",
