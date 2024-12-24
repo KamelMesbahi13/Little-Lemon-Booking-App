@@ -67,10 +67,6 @@ const ProductUpdate = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted!");
-
-    // Log the form data to ensure it's being updated
-    console.log("Form data: ", formData);
 
     const { name, description, price } = formData;
 
