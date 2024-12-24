@@ -17,12 +17,12 @@ connectDB();
 const app = express();
 
 // CORS configuration
-// app.use(
-//   cors({
-//     origin: ["https://toolsmarketdz.com"], // Add your frontend URL
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["https://toolsmarketdz.com"], // Add your frontend URL
+    credentials: true,
+  })
+);
 
 // Middleware
 app.use(express.json());
