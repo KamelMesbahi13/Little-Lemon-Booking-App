@@ -92,25 +92,25 @@ import multer from "multer";
 
 const router = express.Router();
 
-// Configure Cloudinary
+// ✅ Configure Cloudinary with new credentials
 cloudinary.config({
-  cloud_name: "djm39nxur", // Replace with your Cloudinary cloud name
-  api_key: "358188826836358", // Replace with your Cloudinary API key
-  api_secret: "olGB7ckbHOJ-VbkVsfLIoxvUMnc", // Replace with your Cloudinary API secret
+  cloud_name: "ddqd3ur49", // ✅ Your new Cloudinary cloud name
+  api_key: "111287268782438", // ✅ Your new Cloudinary API key
+  api_secret: "VC8xDbQjEl5bXacxsv_Z9gBCWYk", // ✅ Your new Cloudinary API secret
 });
 
-// Configure Multer Storage for Cloudinary
+// ✅ Configure Multer Storage for Cloudinary
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "uploads", // Replace with your desired folder name on Cloudinary
-    allowedFormats: ["jpeg", "png", "webp"], // Allowed file formats
+    folder: "uploads", // Optional: change folder name on Cloudinary if needed
+    allowed_formats: ["jpeg", "png", "webp"], // Allowed image formats
   },
 });
 
 const upload = multer({ storage });
 
-// Define Upload Route
+// ✅ Define Upload Route
 router.post(
   "/",
   upload.fields([
@@ -121,6 +121,7 @@ router.post(
   ]),
   (req, res) => {
     const files = req.files;
+
     res.status(200).json({
       message: "Images uploaded successfully",
       files,
