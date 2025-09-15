@@ -1,6 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import PrivacyPolicy from "./Components/PrivacyPolicy/PrivacyPolicy";
 import NotFound from "./Components/NotFound/NotFound";
 const Navbar = lazy(() => import("./Components/Navbar/Navbar"));
@@ -130,7 +129,6 @@ const App = () => {
           </Routes>
           <Up />
           {showFooter && <Footer />}
-          <ToastContainer />
         </div>
       </Suspense>
     </>

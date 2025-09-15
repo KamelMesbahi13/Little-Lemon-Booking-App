@@ -73,7 +73,7 @@ const NewProducts = () => {
                       onClick={handleLinkClick}
                       className="inline-flex items-center px-3 py-2 mt-4 bg-[#065dd8] text-white rounded-md hover:bg-[#0a6bff] focus:ring-2 focus:outline-none focus:ring-blue-300 transition-colors duration-200 ease-in-out text-sm"
                     >
-                      {t("read_more")}
+                      {t("buy_button")}
                     </Link>
                   </div>
                 </div>

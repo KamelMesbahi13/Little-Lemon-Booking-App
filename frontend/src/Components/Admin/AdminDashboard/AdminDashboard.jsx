@@ -26,7 +26,7 @@ const AdminDashboard = () => {
         <div className="flex flex-wrap justify-around">
           <div className="bg-white shadow-lg rounded-lg p-6 w-[20rem] mt-5 transition-transform transform hover:scale-105">
             <div className="flex items-center justify-center bg-[#0a6bff] text-white rounded-full w-12 h-12 mb-4">
-              <span className="text-2xl font-bold">$</span>
+              <span className="text-2xl font-bold">DZD</span>
             </div>
             <p className="text-gray-600"> {t("sales")}</p>
             <h1 className="text-3xl font-bold text-[#065dd8]">
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 
           <div className="bg-white shadow-lg rounded-lg p-6 w-[20rem] mt-5 transition-transform transform hover:scale-105">
             <div className="flex items-center justify-center bg-[#0a6bff] text-white rounded-full w-12 h-12 mb-4">
-              <span className="text-2xl font-bold">$</span>
+              <span className="text-2xl font-bold">DZD</span>
             </div>
             <p className="text-gray-600">{t("nav_bar_orders")}</p>
             <h1 className="text-3xl font-bold text-[#065dd8]">
