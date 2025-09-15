@@ -196,83 +196,134 @@ const UserOrder = () => {
       ) : error ? (
         <Message variant="danger">{error?.data?.error || error.error}</Message>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-collapse shadow-lg table-auto">
-            <thead>
-              <tr className="text-white bg-secondColor">
-                <th className="px-4 py-2 rtl:text-right">{t("table_img")}</th>
-                <th className="px-4 py-2 rtl:text-right">{t("table_id")}</th>
-                <th className="px-4 py-2 rtl:text-right">{t("table_date")}</th>
-                <th className="px-4 py-2 rtl:text-right">{t("table_total")}</th>
-                <th className="px-4 py-2 rtl:text-right">
-                  {t("shipping_price")}
-                </th>
-                <th className="px-4 py-2 rtl:text-right">
-                  {t("shipping_address")}
-                </th>
-                <th className="px-4 py-2 rtl:text-right">
-                  {t("table_delivered")}
-                </th>
-                <th className="px-4 py-2 rtl:text-right">{t("table_name")}</th>
-                <th className="px-4 py-2 rtl:text-right">{t("table_phone")}</th>
-                <th className="px-4 py-2"></th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {sortedOrders.map((order) => (
-                <tr key={order._id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3">
-                    <img
-                      src={order.orderItems[0].image_one}
-                      alt={order.user}
-                      className="w-16 h-16 rounded-lg"
-                    />
-                  </td>
-                  <td className="px-4 py-3">{order._id}</td>
-                  <td className="px-4 py-3">
-                    {new Date(order.createdAt).toLocaleString()}
-                  </td>
-                  <td className="px-4 py-3 text-[#5cb85c]">
-                    DZD {order.totalPrice}
-                  </td>
-                  <td className="px-4 py-3 text-[#5cb85c]">
-                    DZD {order.shippingPrice || 0}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="max-w-xs">
-                      <div className="text-sm font-medium">
-                        {order.shippingAddress.wilaya}
-                      </div>
-                      <div className="text-xs text-gray-500 truncate">
-                        {order.shippingAddress.address}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    {order.isDelivered ? (
-                      <span className="inline-block w-24 px-3 py-1 text-center text-xs text-white bg-[#5cb85c] rounded-full">
-                        {t("delivered")}
-                      </span>
-                    ) : (
-                      <span className="inline-block w-24 px-3 py-1 text-xs text-center text-white rounded-full bg-red">
-                        {t("not_delivered")}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3">{order.shippingAddress.name}</td>
-                  <td className="px-4 py-3">{order.shippingAddress.phone}</td>
-                  <td className="px-4 py-3">
-                    <Link
-                      to={`/Commande/${order._id}`}
-                      onClick={ToOrderHandler}
-                    >
-                      <button className="button">{t("view_details")}</button>
-                    </Link>
-                  </td>
+        <div
+          className="table-container"
+          style={{
+            transform: "rotateX(180deg)",
+            overflowX: "auto",
+          }}
+        >
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+              .table-container::-webkit-scrollbar {
+                height: 12px;
+              }
+              .table-container::-webkit-scrollbar-track {
+                background: #f1f5f9;
+                border-radius: 6px;
+              }
+              .table-container::-webkit-scrollbar-thumb {
+                background: #cbd5e1;
+                border-radius: 6px;
+              }
+              .table-container::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+              }
+            `,
+            }}
+          />
+
+          <div
+            className="table-content"
+            style={{ transform: "rotateX(180deg)" }}
+          >
+            <table
+              className="border-collapse shadow-lg"
+              style={{ minWidth: "1200px", width: "max-content" }}
+            >
+              <thead>
+                <tr className="text-white bg-secondColor">
+                  <th className="w-16 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_img")}
+                  </th>
+                  <th className="w-32 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_id")}
+                  </th>
+                  <th className="px-2 py-3 text-xs font-medium rtl:text-right w-28">
+                    {t("table_date")}
+                  </th>
+                  <th className="w-20 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_total")}
+                  </th>
+                  <th className="w-24 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_delivered")}
+                  </th>
+                  <th className="w-24 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("delivery_state")}
+                  </th>
+                  <th className="w-20 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("delivery_price")}
+                  </th>
+                  <th className="w-24 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_name")}
+                  </th>
+                  <th className="w-24 px-2 py-3 text-xs font-medium rtl:text-right">
+                    {t("table_phone")}
+                  </th>
+                  <th className="w-20 px-2 py-3 text-xs font-medium"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sortedOrders.map((order) => (
+                  <tr key={order._id} className="hover:bg-gray-50">
+                    <td className="px-2 py-3">
+                      <img
+                        src={order.orderItems[0].image_one}
+                        alt={order.user}
+                        className="object-cover w-12 h-12 rounded-lg"
+                      />
+                    </td>
+                    <td className="px-2 py-3 text-xs truncate max-w-0">
+                      {order._id}
+                    </td>
+                    <td className="px-2 py-3 text-xs">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
+                      DZD {order.totalPrice}
+                    </td>
+                    <td className="px-2 py-3">
+                      {order.isDelivered ? (
+                        <span className="inline-block w-20 px-2 py-1 text-center text-xs text-white bg-[#5cb85c] rounded-full">
+                          {t("delivered")}
+                        </span>
+                      ) : (
+                        <span className="inline-block w-20 px-2 py-1 text-xs text-center text-white rounded-full bg-red">
+                          {t("not_delivered")}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-2 py-3 text-xs text-center">
+                      {order.shippingAddress.wilaya}
+                    </td>
+                    <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
+                      DZD {order.shippingPrice}
+                    </td>
+                    <td className="px-2 py-3 text-xs">
+                      {order.shippingAddress.name}
+                    </td>
+                    <td className="px-2 py-3 text-xs">
+                      {order.shippingAddress.phone}
+                    </td>
+                    <td className="px-2 py-3">
+                      <Link
+                        to={`/Commande/${order._id}`}
+                        onClick={() => ToOrderHandler(`/Commande/${order._id}`)}
+                      >
+                        <button
+                          className="px-3 py-2 text-xs font-medium text-white transition-colors duration-200 rounded bg-mainColor hover:bg-blue-600"
+                          style={{ minWidth: "80px" }}
+                        >
+                          {t("view_details")}
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
