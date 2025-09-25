@@ -164,8 +164,6 @@ const UserOrder = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  console.log("Orders data:", orders); // Debug log to check order data structure
-
   return (
     <div className="container px-4 py-8 mx-auto">
       <h1 className="mb-6">{t("my_order_header")}</h1>
