@@ -164,6 +164,8 @@ const UserOrder = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+  console.log("Orders data:", orders); // Debug log to check order data structure
+
   return (
     <div className="container px-4 py-8 mx-auto">
       <h1 className="mb-6">{t("my_order_header")}</h1>
@@ -265,62 +267,72 @@ const UserOrder = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sortedOrders.map((order) => (
-                  <tr key={order._id} className="hover:bg-gray-50">
-                    <td className="px-2 py-3">
-                      <img
-                        src={order.orderItems[0].image_one}
-                        alt={order.user}
-                        className="object-cover w-12 h-12 rounded-lg"
-                      />
-                    </td>
-                    <td className="px-2 py-3 text-xs truncate max-w-0">
-                      {order._id}
-                    </td>
-                    <td className="px-2 py-3 text-xs">
-                      {new Date(order.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
-                      DZD {order.totalPrice}
-                    </td>
-                    <td className="px-2 py-3">
-                      {order.isDelivered ? (
-                        <span className="inline-block w-20 px-2 py-1 text-center text-xs text-white bg-[#5cb85c] rounded-full">
-                          {t("delivered")}
-                        </span>
-                      ) : (
-                        <span className="inline-block w-20 px-2 py-1 text-xs text-center text-white rounded-full bg-red">
-                          {t("not_delivered")}
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-2 py-3 text-xs text-center">
-                      {order.shippingAddress.wilaya}
-                    </td>
-                    <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
-                      DZD {order.shippingPrice}
-                    </td>
-                    <td className="px-2 py-3 text-xs">
-                      {order.shippingAddress.name}
-                    </td>
-                    <td className="px-2 py-3 text-xs">
-                      {order.shippingAddress.phone}
-                    </td>
-                    <td className="px-2 py-3">
-                      <Link
-                        to={`/Commande/${order._id}`}
-                        onClick={() => ToOrderHandler(`/Commande/${order._id}`)}
-                      >
-                        <button
-                          className="px-3 py-2 text-xs font-medium text-white transition-colors duration-200 rounded bg-mainColor hover:bg-blue-600"
-                          style={{ minWidth: "80px" }}
+                {sortedOrders.map((order) => {
+                  return (
+                    <tr key={order._id} className="hover:bg-gray-50">
+                      <td className="px-2 py-3">
+                        <img
+                          src={order.orderItems[0].image_one}
+                          alt={order.user}
+                          className="object-cover w-12 h-12 rounded-lg"
+                        />
+                      </td>
+                      <td className="px-2 py-3 text-xs truncate max-w-0">
+                        {order._id}
+                      </td>
+                      <td className="px-2 py-3 text-xs">
+                        {new Date(order.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
+                        DZD{" "}
+                        {order.totalPrice
+                          ? order.totalPrice.toFixed(2)
+                          : "0.00"}
+                      </td>
+                      <td className="px-2 py-3">
+                        {order.isDelivered ? (
+                          <span className="inline-block w-20 px-2 py-1 text-center text-xs text-white bg-[#5cb85c] rounded-full">
+                            {t("delivered")}
+                          </span>
+                        ) : (
+                          <span className="inline-block w-20 px-2 py-1 text-xs text-center text-white rounded-full bg-red">
+                            {t("not_delivered")}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-2 py-3 text-xs text-center">
+                        {order.shippingAddress?.wilaya || "N/A"}
+                      </td>
+                      <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
+                        DZD{" "}
+                        {order.shippingPrice
+                          ? order.shippingPrice.toFixed(2)
+                          : "0.00"}
+                      </td>
+                      <td className="px-2 py-3 text-xs">
+                        {order.shippingAddress?.name || "N/A"}
+                      </td>
+                      <td className="px-2 py-3 text-xs">
+                        {order.shippingAddress?.phone || "N/A"}
+                      </td>
+                      <td className="px-2 py-3">
+                        <Link
+                          to={`/Commande/${order._id}`}
+                          onClick={() =>
+                            ToOrderHandler(`/Commande/${order._id}`)
+                          }
                         >
-                          {t("view_details")}
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
+                          <button
+                            className="px-3 py-2 text-xs font-medium text-white transition-colors duration-200 rounded bg-mainColor hover:bg-blue-600"
+                            style={{ minWidth: "80px" }}
+                          >
+                            {t("view_details")}
+                          </button>
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
