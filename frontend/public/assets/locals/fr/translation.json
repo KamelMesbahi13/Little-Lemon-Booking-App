@@ -128,6 +128,8 @@
   "cart_empty": "Votre panier est vide",
   "order_summary": "Résumé de la commande",
   "wilaya": "Wilaya",
+  "delivery_state": "Wilaya",
+  "delivery_price": "Prix de livraison",
   "thank_you_for_ordering": "Merci de commander",
   "thank_you_for_choosing": "Merci d'avoir choisi notre magasin ! Nous apprécions votre confiance",
   "get_back_to_home": "Retour à la page d'accueil",

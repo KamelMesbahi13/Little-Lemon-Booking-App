@@ -125,7 +125,7 @@
 //                 <p className="font-semibold ltr:mr-2 rtl:ml-2">
 //                   {t("wilaya")}:
 //                 </p>
-//                 <p>{shipping.selectedWilaya}</p>
+//                 <p>{wilayaFromStorage}</p>
 //               </div>
 
 //               <div className="flex mb-4">
@@ -169,11 +169,28 @@ const PlaceOrder = () => {
 
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
-  const shipping = useSelector((state) => state.shipping); // Get the shipping state (for Wilaya)
-  const prices = useSelector((state) => ({
-    itemsPrice: state.price.productTotalPrice,
-    shippingPrice: state.price.shippingPrice,
-  }));
+
+  // Read shipping rate: prefer Redux ShippingSlice, fallback to localStorage set by Shipping.jsx
+  const shippingRateFromRedux = useSelector(
+    (state) => state.shipping.shippingRate
+  );
+  const wilayaFromRedux = useSelector(
+    (state) => state.shipping.selectedWilaya
+  );
+  const shippingRateFromStorage = Number(
+    JSON.parse(localStorage.getItem("checkoutShippingRate") || "0")
+  );
+  const wilayaFromStorage =
+    localStorage.getItem("checkoutWilaya") || wilayaFromRedux;
+
+  // Calculate prices directly from cart + shipping rate (no PriceSlice dependency)
+  const itemsPrice = cart.cartItems.reduce(
+    (acc, item) => acc + Number(item.price) * Number(item.qty),
+    0
+  );
+  const shippingPrice =
+    shippingRateFromRedux > 0 ? shippingRateFromRedux : shippingRateFromStorage;
+  const totalPrice = itemsPrice + shippingPrice;
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
@@ -184,29 +201,36 @@ const PlaceOrder = () => {
   }, [cart.shippingAddress.address, navigate]);
 
   const placeOrderHandler = async () => {
+    console.log("=== PLACE ORDER DEBUG ===");
+    console.log("itemsPrice:", itemsPrice);
+    console.log("shippingPrice:", shippingPrice, "(redux:", shippingRateFromRedux, "/ storage:", shippingRateFromStorage, ")");
+    console.log("totalPrice:", totalPrice);
+    console.log("wilaya:", cart.shippingAddress?.wilaya || wilayaFromStorage);
+    console.log("=========================");
+
     try {
       const orderData = {
         orderItems: cart.cartItems,
         shippingAddress: {
           ...cart.shippingAddress,
-          wilaya: shipping.selectedWilaya,
+          wilaya: cart.shippingAddress?.wilaya || wilayaFromStorage,
         },
-        itemsPrice: prices.itemsPrice,
-        shippingPrice: prices.shippingPrice,
-        totalPrice: prices.itemsPrice + prices.shippingPrice,
+        itemsPrice: itemsPrice,
+        shippingPrice: shippingPrice,
+        totalPrice: totalPrice,
       };
 
-      console.log("Creating order with data:", orderData); // Debug log
-
       const result = await createOrder(orderData).unwrap();
+      console.log("Order created successfully:", result);
 
-      console.log("Order created successfully:", result); // Debug log
+      // Clean up checkout localStorage keys after successful order
+      localStorage.removeItem("checkoutShippingRate");
+      localStorage.removeItem("checkoutWilaya");
 
       navigate("/");
       window.scrollTo(0, 0);
-    } catch (error) {
-      console.error("Error creating order:", error);
-      // Error will be handled by the error state from the mutation
+    } catch (err) {
+      console.error("Error creating order:", err);
     }
   };
 
@@ -265,16 +289,16 @@ const PlaceOrder = () => {
           <div className="flex flex-col justify-between bg-[#eee] p-8 mb-4 shadow-xl rounded-lg md:flex-row">
             <ul className="mb-6 md:mb-0">
               <li className="mb-4 text-lg">
-                <p className="font-semibold">{t("item")}:</p> DZD
-                {prices.itemsPrice.toFixed(2)}
+                <p className="font-semibold">{t("item")}:</p> DZD{" "}
+                {itemsPrice.toFixed(2)}
               </li>
               <li className="mb-4 text-lg">
-                <p className="font-semibold">{t("shipping_header")}:</p> DZD
-                {prices.shippingPrice.toFixed(2)}
+                <p className="font-semibold">{t("shipping_header")}:</p> DZD{" "}
+                {shippingPrice.toFixed(2)}
               </li>
               <li className="text-lg">
-                <p className="font-semibold">{t("table_total")}:</p> DZD
-                {(prices.itemsPrice + prices.shippingPrice).toFixed(2)}
+                <p className="font-semibold">{t("table_total")}:</p> DZD{" "}
+                {totalPrice.toFixed(2)}
               </li>
             </ul>
 
@@ -304,7 +328,7 @@ const PlaceOrder = () => {
                 <p className="font-semibold ltr:mr-2 rtl:ml-2">
                   {t("wilaya")}:
                 </p>
-                <p>{shipping.selectedWilaya}</p>
+                <p>{wilayaFromStorage}</p>
               </div>
 
               <div className="flex mb-4">

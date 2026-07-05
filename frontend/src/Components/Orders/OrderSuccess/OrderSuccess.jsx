@@ -1,10 +1,12 @@
 import { FaCircleCheck } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 const OrderSuccess = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const orderId = location.state?.orderId;
 
   const ToShopHandler = () => {
     navigate("/Produits");
@@ -12,7 +14,11 @@ const OrderSuccess = () => {
   };
 
   const ToHomeHandler = () => {
-    navigate("/Passer-commande");
+    if (orderId) {
+      navigate(`/Commande/${orderId}`);
+    } else {
+      navigate("/");
+    }
     window.scrollTo(0, 0);
   };
 

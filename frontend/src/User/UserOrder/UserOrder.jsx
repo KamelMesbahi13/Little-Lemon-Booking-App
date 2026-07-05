@@ -283,9 +283,7 @@ const UserOrder = () => {
                       </td>
                       <td className="px-2 py-3 text-xs text-[#5cb85c] font-medium">
                         DZD{" "}
-                        {order.totalPrice
-                          ? order.totalPrice.toFixed(2)
-                          : "0.00"}
+                        {((order.itemsPrice || 0) + (order.shippingPrice || 0)).toFixed(2)}
                       </td>
                       <td className="px-2 py-3">
                         {order.isDelivered ? (

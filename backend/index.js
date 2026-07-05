@@ -17,9 +17,21 @@ connectDB();
 const app = express();
 
 // CORS configuration
+const allowedOrigins = [
+  "https://toolsmarketdz.com",
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
 app.use(
   cors({
-    origin: ["https://toolsmarketdz.com"], // Add your frontend URL
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -47,4 +59,17 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Start server
-app.listen(port, () => console.log(`Server Running on port ${port}`));
+const server = app.listen(port, () =>
+  console.log(`Server Running on port ${port}`)
+);
+
+server.on("error", (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.error(
+      `Port ${port} is already in use. Please stop the other process and try again.`
+    );
+    process.exit(1);
+  } else {
+    throw err;
+  }
+});

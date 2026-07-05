@@ -44,11 +44,19 @@ const Order = () => {
     );
   }
 
+  if (!order) {
+    return (
+      <Message variant="danger">
+        {t("order_not_found") || "Order not found"}
+      </Message>
+    );
+  }
+
   return (
     <div className="container p-4 mx-auto md:flex rtl:flex-row-reverse">
       <div className="pr-4 md:w-2/3">
         <div className="my-5 border border-[#eee] shadow-xl">
-          {order && order.orderItems.length === 0 ? (
+          {order && order.orderItems && order.orderItems.length === 0 ? (
             <Message> {t("order_empty")}</Message>
           ) : (
             <div className="overflow-x-auto">
@@ -70,8 +78,8 @@ const Order = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {order.orderItems.map((item) => (
-                    <tr key={item.product} className="border-b">
+                  {order.orderItems && order.orderItems.map((item) => (
+                    <tr key={item.product || item._id} className="border-b">
                       <td className="p-2">
                         <img
                           src={item.image_one}

@@ -359,26 +359,47 @@ const ProductDetails = () => {
 
     dispatch(saveShippingAddress(shippingAddress));
 
+    // DEBUG: Check what values we have
+    console.log("=== DEBUG ORDER SUBMISSION ===");
+    console.log("shippingRate from Redux:", shippingRate);
+    console.log("selectedWilaya:", selectedWilaya);
+    console.log("shippingMethod:", shippingMethod);
+    console.log("productTotalPrice:", productTotalPrice);
+    console.log("totalPrice:", totalPrice);
+
     const orderDetails = {
       orderItems: [{ ...product, qty }],
       shippingAddress,
       paymentMethod: "YourPaymentMethod",
       itemsPrice: productTotalPrice,
-      shippingPrice: shippingRate,
+      shippingPrice: shippingRate, // This should contain the shipping price
       totalPrice: totalPrice,
     };
 
+    // Make sure all prices are numbers
+    if (
+      typeof orderDetails.shippingPrice !== "number" ||
+      isNaN(orderDetails.shippingPrice)
+    ) {
+      console.error("Invalid shippingPrice:", orderDetails.shippingPrice);
+      toast.error("Shipping price calculation error");
+      return;
+    }
+
+    console.log("Order details being sent to backend:", orderDetails);
+    console.log("==================================");
+
     try {
-      await createOrder(orderDetails).unwrap();
+      const response = await createOrder(orderDetails).unwrap();
+      console.log("Backend response:", response);
       toast.success(`${t("order_success")}`);
-      navigate("/Succès-de-la-commande");
+      navigate("/Succès-de-la-commande", { state: { orderId: response._id } });
       window.scrollTo(0, 0);
     } catch (error) {
       console.error("Error placing order:", error);
       toast.error(error?.data?.message || t("error_placing_order"));
     }
   };
-
   // Determine the description based on the current language
   const descriptionToDisplay =
     i18n.language === "ar" ? product?.description_ar : product?.description;

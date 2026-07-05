@@ -148,7 +148,11 @@ const updateUserById = asyncHandler(async (req, res) => {
   if (user) {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
-    user.isAdmin = Boolean(req.body.isAdmin);
+    // Only update isAdmin if it is explicitly provided in the request body
+    // Prevents silently resetting admin status to false when not sent
+    if (req.body.isAdmin !== undefined) {
+      user.isAdmin = Boolean(req.body.isAdmin);
+    }
 
     const updatedUser = await user.save();
 

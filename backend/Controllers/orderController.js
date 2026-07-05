@@ -225,22 +225,34 @@
 import Order from "../Models/orderModel.js";
 import Product from "../Models/productModel.js";
 
-// Utility Function to clean price (remove currency symbols)
+// Updated Utility Function to clean price (remove currency symbols)
 function cleanPrice(price) {
-  if (typeof price === "string") {
-    return parseFloat(price.replace(/[$€£¥₹]/g, ""));
+  // If it's already a number, return it as is
+  if (typeof price === "number" && !isNaN(price)) {
+    return price;
   }
-  return parseFloat(price) || 0;
+
+  // If it's a string, try to clean and parse it
+  if (typeof price === "string") {
+    const cleaned = price.replace(/[$€£¥₹\s]/g, "");
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+
+  // Try to parse as float, default to 0 if fails
+  const parsed = parseFloat(price);
+  return isNaN(parsed) ? 0 : parsed;
 }
 
-// Utility Function
-function calcPrices(orderItems) {
+// Updated Utility Function - DON'T calculate shipping price here
+function calcPrices(orderItems, providedShippingPrice = 0) {
   const itemsPrice = orderItems.reduce(
     (acc, item) => acc + cleanPrice(item.price) * item.qty,
     0
   );
 
-  const shippingPrice = itemsPrice > 100 ? 0 : 10;
+  // Use the shipping price provided from frontend instead of calculating it
+  const shippingPrice = cleanPrice(providedShippingPrice);
   const totalPrice = (itemsPrice + shippingPrice).toFixed(2);
 
   return {
@@ -252,17 +264,61 @@ function calcPrices(orderItems) {
 
 // Helper function to clean order data before sending to frontend
 function cleanOrderData(order) {
-  return {
-    ...order.toObject(),
-    totalPrice: cleanPrice(order.totalPrice),
-    shippingPrice: cleanPrice(order.shippingPrice),
-    itemsPrice: cleanPrice(order.itemsPrice),
+  const orderObj = order.toObject();
+
+  console.log("=== CLEAN ORDER DATA DEBUG ===");
+  console.log(
+    "Original order.shippingPrice:",
+    order.shippingPrice,
+    typeof order.shippingPrice
+  );
+  console.log(
+    "Original order.totalPrice:",
+    order.totalPrice,
+    typeof order.totalPrice
+  );
+  console.log(
+    "Original order.itemsPrice:",
+    order.itemsPrice,
+    typeof order.itemsPrice
+  );
+
+  const cleaned = {
+    ...orderObj,
+    totalPrice: cleanPrice(orderObj.totalPrice),
+    shippingPrice: cleanPrice(orderObj.shippingPrice),
+    itemsPrice: cleanPrice(orderObj.itemsPrice),
   };
+
+  console.log("After cleaning - shippingPrice:", cleaned.shippingPrice);
+  console.log("After cleaning - totalPrice:", cleaned.totalPrice);
+  console.log("After cleaning - itemsPrice:", cleaned.itemsPrice);
+  console.log("============================");
+
+  return cleaned;
 }
 
 const createOrder = async (req, res) => {
   try {
-    const { orderItems, shippingAddress, paymentMethod } = req.body;
+    const {
+      orderItems,
+      shippingAddress,
+      paymentMethod,
+      shippingPrice,
+      itemsPrice,
+      totalPrice,
+    } = req.body;
+
+    console.log("=== BACKEND RECEIVED DATA ===");
+    console.log(
+      "Raw shippingPrice:",
+      shippingPrice,
+      "Type:",
+      typeof shippingPrice
+    );
+    console.log("Raw itemsPrice:", itemsPrice, "Type:", typeof itemsPrice);
+    console.log("Raw totalPrice:", totalPrice, "Type:", typeof totalPrice);
+    console.log("============================");
 
     if (!orderItems || orderItems.length === 0) {
       return res.status(400).json({ message: "No order items" });
@@ -300,25 +356,97 @@ const createOrder = async (req, res) => {
       };
     });
 
-    const { itemsPrice, shippingPrice, totalPrice } = calcPrices(dbOrderItems);
-
-    const order = new Order({
+    // Use the exact values from frontend without any processing
+    const orderData = {
       orderItems: dbOrderItems,
       shippingAddress: {
         ...shippingAddress,
-        name, // Include name
-        phone, // Include phone
-        wilaya, // Include wilaya
+        name,
+        phone,
+        wilaya,
       },
       paymentMethod,
-      itemsPrice,
-      shippingPrice,
-      totalPrice,
-    });
+      itemsPrice: itemsPrice, // Use directly
+      shippingPrice: shippingPrice, // Use directly
+      totalPrice: totalPrice, // Use directly
+    };
+
+    console.log("=== ORDER DATA TO SAVE ===");
+    console.log("orderData.shippingPrice:", orderData.shippingPrice);
+    console.log("orderData.itemsPrice:", orderData.itemsPrice);
+    console.log("orderData.totalPrice:", orderData.totalPrice);
+    console.log("==========================");
+
+    const order = new Order(orderData);
+
+    console.log("=== NEW ORDER OBJECT ===");
+    console.log(
+      "order.shippingPrice:",
+      order.shippingPrice,
+      "Type:",
+      typeof order.shippingPrice
+    );
+    console.log(
+      "order.itemsPrice:",
+      order.itemsPrice,
+      "Type:",
+      typeof order.itemsPrice
+    );
+    console.log(
+      "order.totalPrice:",
+      order.totalPrice,
+      "Type:",
+      typeof order.totalPrice
+    );
+    console.log("========================");
 
     const createdOrder = await order.save();
-    res.status(201).json(cleanOrderData(createdOrder));
+
+    console.log("=== SAVED ORDER ===");
+    console.log(
+      "createdOrder.shippingPrice:",
+      createdOrder.shippingPrice,
+      "Type:",
+      typeof createdOrder.shippingPrice
+    );
+    console.log(
+      "createdOrder.itemsPrice:",
+      createdOrder.itemsPrice,
+      "Type:",
+      typeof createdOrder.itemsPrice
+    );
+    console.log(
+      "createdOrder.totalPrice:",
+      createdOrder.totalPrice,
+      "Type:",
+      typeof createdOrder.totalPrice
+    );
+    console.log("==================");
+
+    // Create response object manually
+    const response = {
+      _id: createdOrder._id,
+      orderItems: createdOrder.orderItems,
+      shippingAddress: createdOrder.shippingAddress,
+      paymentMethod: createdOrder.paymentMethod,
+      itemsPrice: createdOrder.itemsPrice,
+      shippingPrice: createdOrder.shippingPrice,
+      totalPrice: createdOrder.totalPrice,
+      isPaid: createdOrder.isPaid,
+      isDelivered: createdOrder.isDelivered,
+      createdAt: createdOrder.createdAt,
+      updatedAt: createdOrder.updatedAt,
+      __v: createdOrder.__v,
+    };
+
+    console.log("=== RESPONSE OBJECT ===");
+    console.log("response.shippingPrice:", response.shippingPrice);
+    console.log("response.totalPrice:", response.totalPrice);
+    console.log("======================");
+
+    res.status(201).json(response);
   } catch (error) {
+    console.error("Error creating order:", error);
     res.status(500).json({ error: error.message });
   }
 };
