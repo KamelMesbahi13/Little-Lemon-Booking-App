@@ -22,6 +22,15 @@ const Cart = () => {
   };
 
   const checkoutHandler = () => {
+    if (window.fbq) {
+      window.fbq("track", "InitiateCheckout", {
+        content_ids: cartItems.map((item) => item._id),
+        content_type: "product",
+        value: cartItems.reduce((acc, item) => acc + Number(item.price) * Number(item.qty), 0),
+        currency: "DZD",
+        num_items: cartItems.reduce((acc, item) => acc + Number(item.qty), 0),
+      });
+    }
     navigate("/Livraison");
   };
 

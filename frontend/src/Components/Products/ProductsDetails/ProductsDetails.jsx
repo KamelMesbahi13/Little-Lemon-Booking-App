@@ -259,6 +259,24 @@ const ProductDetails = () => {
   const [addressError, setAddressError] = useState("");
   const [shippingMethod, setShippingMethod] = useState("house");
 
+  // Facebook Pixel tracking state
+  const [checkoutInitiated, setCheckoutInitiated] = useState(false);
+
+  const handleInitiateCheckout = () => {
+    if (!checkoutInitiated) {
+      setCheckoutInitiated(true);
+      if (window.fbq) {
+        window.fbq("track", "InitiateCheckout", {
+          content_ids: [product?._id],
+          content_type: "product",
+          value: product?.price || 0,
+          currency: "DZD",
+          num_items: qty
+        });
+      }
+    }
+  };
+
   // Redux selectors
   const shippingRate = useSelector((state) => state.shipping.shippingRate);
   const selectedWilaya = useSelector((state) => state.shipping.selectedWilaya);
@@ -298,6 +316,19 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(setTotalPrice(totalPrice));
   }, [dispatch, totalPrice]);
+
+  // Track ViewContent when product details are viewed
+  useEffect(() => {
+    if (product && window.fbq) {
+      window.fbq("track", "ViewContent", {
+        content_ids: [product._id],
+        content_name: product.name,
+        content_type: "product",
+        value: product.price,
+        currency: "DZD"
+      });
+    }
+  }, [product]);
 
   const handleLinkClick = (route) => {
     navigate(route);
@@ -392,6 +423,18 @@ const ProductDetails = () => {
     try {
       const response = await createOrder(orderDetails).unwrap();
       console.log("Backend response:", response);
+
+      // Track Facebook Pixel Purchase Event
+      if (window.fbq) {
+        window.fbq("track", "Purchase", {
+          content_ids: [product._id],
+          content_type: "product",
+          value: totalPrice,
+          currency: "DZD",
+          num_items: qty
+        }, { eventID: response._id });
+      }
+
       toast.success(`${t("order_success")}`);
       navigate("/Succès-de-la-commande", { state: { orderId: response._id } });
       window.scrollTo(0, 0);
@@ -505,6 +548,7 @@ const ProductDetails = () => {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      onFocus={handleInitiateCheckout}
                     />
                     {nameError && (
                       <p className="mt-1 text-sm text-red-500">{nameError}</p>
@@ -529,6 +573,7 @@ const ProductDetails = () => {
                           setPhoneError("");
                         }
                       }}
+                      onFocus={handleInitiateCheckout}
                     />
                     {phoneError && (
                       <p className="mt-1 text-sm text-red-500">{phoneError}</p>
@@ -545,6 +590,7 @@ const ProductDetails = () => {
                       required
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
+                      onFocus={handleInitiateCheckout}
                     />
                     {addressError && (
                       <p className="mt-1 text-sm text-red-500">

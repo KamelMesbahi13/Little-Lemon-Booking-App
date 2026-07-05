@@ -20,6 +20,17 @@ const ProductCard = ({ p }) => {
 
   const addToCartHandler = (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
+    
+    if (window.fbq) {
+      window.fbq("track", "AddToCart", {
+        content_ids: [product._id],
+        content_name: product.name,
+        content_type: "product",
+        value: product.price,
+        currency: "DZD"
+      });
+    }
+
     toast.success("Item added successfully", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,

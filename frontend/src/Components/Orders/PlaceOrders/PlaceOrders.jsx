@@ -223,6 +223,17 @@ const PlaceOrder = () => {
       const result = await createOrder(orderData).unwrap();
       console.log("Order created successfully:", result);
 
+      // Track Facebook Pixel Purchase Event
+      if (window.fbq) {
+        window.fbq("track", "Purchase", {
+          content_ids: cart.cartItems.map(item => item._id),
+          content_type: "product",
+          value: totalPrice,
+          currency: "DZD",
+          num_items: cart.cartItems.reduce((acc, item) => acc + item.qty, 0)
+        }, { eventID: result._id });
+      }
+
       // Clean up checkout localStorage keys after successful order
       localStorage.removeItem("checkoutShippingRate");
       localStorage.removeItem("checkoutWilaya");

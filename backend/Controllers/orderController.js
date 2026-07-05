@@ -224,6 +224,7 @@
 
 import Order from "../Models/orderModel.js";
 import Product from "../Models/productModel.js";
+import { sendFacebookPurchaseEvent } from "../Utils/facebookApi.js";
 
 // Updated Utility Function to clean price (remove currency symbols)
 function cleanPrice(price) {
@@ -443,6 +444,9 @@ const createOrder = async (req, res) => {
     console.log("response.shippingPrice:", response.shippingPrice);
     console.log("response.totalPrice:", response.totalPrice);
     console.log("======================");
+
+    // Send Conversions API event to Facebook asynchronously
+    sendFacebookPurchaseEvent(req, createdOrder);
 
     res.status(201).json(response);
   } catch (error) {
